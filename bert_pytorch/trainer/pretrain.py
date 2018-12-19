@@ -6,7 +6,9 @@ from torch.utils.data import DataLoader
 from model import BERTLM, BERT
 from trainer.optim_schedule import ScheduledOptim
 
+from mlflow import log_metric
 import tqdm
+
 
 
 class BERTTrainer:
@@ -35,6 +37,7 @@ class BERTTrainer:
         :param with_cuda: traning with cuda
         :param log_freq: logging frequency of the batch iteration
         """
+
 
         # Setup cuda device for BERT training, argument -c, --cuda should be true
         cuda_condition = torch.cuda.is_available() and with_cuda
@@ -108,6 +111,7 @@ class BERTTrainer:
 
             # 2-3. Adding next_loss and mask_loss : 3.4 Pre-training Procedure
             loss = next_loss + mask_loss
+            #loss = mask_loss
 
             # 3. backward and optimization only in train
             if train:
@@ -128,12 +132,14 @@ class BERTTrainer:
                 "avg_acc": total_correct / total_element * 100,
                 "loss": loss.item()
             }
-
+            log_metric("%s avg_loss" % str_code, post_fix['avg_loss'])
+            log_metric("%s avg_acc" % str_code, post_fix['avg_acc'])
             if i % self.log_freq == 0:
                 data_iter.write(str(post_fix))
 
         print("EP%d_%s, avg_loss=" % (epoch, str_code), avg_loss / len(data_iter), "total_acc=",
               total_correct * 100.0 / total_element)
+	
 
     def save(self, epoch, file_path="output/bert_trained.model"):
         """

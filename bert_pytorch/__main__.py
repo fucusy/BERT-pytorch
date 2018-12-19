@@ -7,6 +7,10 @@ from trainer import BERTTrainer
 from dataset import BERTDataset, WordVocab
 
 
+import mlflow
+from mlflow import log_metric, log_param, log_artifacts
+
+
 def train():
     parser = argparse.ArgumentParser()
 
@@ -36,6 +40,7 @@ def train():
     parser.add_argument("--adam_beta2", type=float, default=0.999, help="adam first beta value")
 
     args = parser.parse_args()
+    mlflow.set_experiment("bert pytorch movielens")
 
     print("Loading Vocab", args.vocab_path)
     vocab = WordVocab.load_vocab(args.vocab_path)
@@ -64,6 +69,7 @@ def train():
 
     print("Training Start")
     print("lr", args.lr)
+    log_param("lr", args.lr)
     for epoch in range(args.epochs):
         trainer.train(epoch)
         trainer.save(epoch, args.output_path)

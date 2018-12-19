@@ -173,3 +173,4 @@ fabric.properties
 bert_pytorch/data/ml-100k/
 *.swp
 bert_pytorch/dataset/vocab.small.txt
+bert_pytorch/mlruns
