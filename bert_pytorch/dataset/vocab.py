@@ -183,3 +183,6 @@ def build():
 
     print("VOCAB SIZE:", len(vocab))
     vocab.save_vocab(args.output_path)
+
+if __name__ == '__main__':
+    build()
