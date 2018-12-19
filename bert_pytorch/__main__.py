@@ -63,6 +63,7 @@ def train():
                           with_cuda=args.with_cuda, cuda_devices=args.cuda_devices, log_freq=args.log_freq)
 
     print("Training Start")
+    print("lr", args.lr)
     for epoch in range(args.epochs):
         trainer.train(epoch)
         trainer.save(epoch, args.output_path)
