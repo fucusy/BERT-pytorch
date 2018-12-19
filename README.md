@@ -108,6 +108,23 @@ not directly captured by language modeling
 2. Randomly 50% of next sentence, gonna be unrelated sentence.
 
 
+## development mode
+### create the env,
+
+`
+#create virtual env from your python 3, you may need to change the python 3 path
+virtualenv --no-site-packages env -p /usr/local/bin/python3
+source env/bin/activate
+pip install -r requirements.txt
+
+#run the test
+cd bert_pytorch
+bash dev_test.sh
+`
+
+### change the code as your want
+
+
 ## Author
 Junseong Kim, Scatter Lab (codertimo@gmail.com / junseong.kim@scatterlab.co.kr)
 

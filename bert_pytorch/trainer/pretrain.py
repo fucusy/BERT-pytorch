@@ -3,8 +3,8 @@ import torch.nn as nn
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 
-from ..model import BERTLM, BERT
-from .optim_schedule import ScheduledOptim
+from model import BERTLM, BERT
+from trainer.optim_schedule import ScheduledOptim
 
 import tqdm
 
@@ -93,7 +93,6 @@ class BERTTrainer:
         avg_loss = 0.0
         total_correct = 0
         total_element = 0
-
         for i, data in data_iter:
             # 0. batch_data will be sent into the device(GPU or cpu)
             data = {key: value.to(self.device) for key, value in data.items()}

@@ -20,10 +20,9 @@ class BERTDataset(Dataset):
                     self.corpus_lines += 1
 
             if on_memory:
-                self.lines = [line[:-1].split("\t")
+                self.lines = [line[:-1].split("\\t")
                               for line in tqdm.tqdm(f, desc="Loading Dataset", total=corpus_lines)]
                 self.corpus_lines = len(self.lines)
-
         if not on_memory:
             self.file = open(corpus_path, "r", encoding=encoding)
             self.random_file = open(corpus_path, "r", encoding=encoding)
