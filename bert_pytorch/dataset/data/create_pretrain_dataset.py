@@ -1,8 +1,5 @@
 # encode=utf-8
-import pickle
 import random
-import tqdm
-from collections import Counter
 
 
 def generate_sentences(text_path, rng):
@@ -37,7 +34,6 @@ def generate_sentences(text_path, rng):
         j = 0
         while j < len(document):
             segment = document[j]
-            print(segment)
             current_chunk.append(segment)
             current_length += len(segment)
             if j == len(document) - 1 or current_length >= target_seq_length:
@@ -47,17 +43,16 @@ def generate_sentences(text_path, rng):
                         a_end = rng.randint(1, len(current_chunk) - 1)
 
                     tokens_a = []
-                    for j in range(a_end):
-                      tokens_a.extend(current_chunk[j])
+                    for k in range(a_end):
+                      tokens_a.extend(current_chunk[k])
 
                     tokens_b = []
-                    for j in range(a_end, len(current_chunk)):
-                        tokens_b.extend(current_chunk[j])
+                    for k in range(a_end, len(current_chunk)):
+                        tokens_b.extend(current_chunk[k])
                     s = ' '.join(tokens_a) + ' \\t ' + ' '.join(tokens_b)
                     sentences.append(s)
                 current_chunk = []
                 current_length = 0
-            exit()
             j += 1
     return sentences
 
