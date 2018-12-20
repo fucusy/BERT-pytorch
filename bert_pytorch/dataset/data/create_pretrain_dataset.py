@@ -23,37 +23,38 @@ def generate_sentences(text_path, rng):
         all_documents[-1].append(tokens)
 
     rng.shuffle(all_documents)
-    for i, document in enumerate(all_documents):
-        max_num_tokens = max_seq_length - 3
-        target_seq_length = max_num_tokens
-        if rng.random() < short_seq_prob:
-            target_seq_length = rng.randint(2, max_num_tokens)
+    for _ in range(dupe_factor):
+        for i, document in enumerate(all_documents):
+            max_num_tokens = max_seq_length - 3
+            target_seq_length = max_num_tokens
+            if rng.random() < short_seq_prob:
+                target_seq_length = rng.randint(2, max_num_tokens)
 
-        current_chunk = []
-        current_length = 0
-        j = 0
-        while j < len(document):
-            segment = document[j]
-            current_chunk.append(segment)
-            current_length += len(segment)
-            if j == len(document) - 1 or current_length >= target_seq_length:
-                if current_chunk:
-                    a_end = 1
-                    if len(current_chunk) >= 2:
-                        a_end = rng.randint(1, len(current_chunk) - 1)
+            current_chunk = []
+            current_length = 0
+            j = 0
+            while j < len(document):
+                segment = document[j]
+                current_chunk.append(segment)
+                current_length += len(segment)
+                if j >= len(document) - 1 or current_length >= target_seq_length:
+                    if current_chunk:
+                        a_end = 1
+                        if len(current_chunk) >= 2:
+                            a_end = rng.randint(1, len(current_chunk) - 1)
 
-                    tokens_a = []
-                    for k in range(a_end):
-                      tokens_a.extend(current_chunk[k])
+                        tokens_a = []
+                        for k in range(a_end):
+                          tokens_a.extend(current_chunk[k])
 
-                    tokens_b = []
-                    for k in range(a_end, len(current_chunk)):
-                        tokens_b.extend(current_chunk[k])
-                    s = ' '.join(tokens_a) + ' \\t ' + ' '.join(tokens_b)
-                    sentences.append(s)
-                current_chunk = []
-                current_length = 0
-            j += 1
+                        tokens_b = []
+                        for k in range(a_end, len(current_chunk)):
+                            tokens_b.extend(current_chunk[k])
+                        s = ' '.join(tokens_a) + ' \\t ' + ' '.join(tokens_b)
+                        sentences.append(s)
+                    current_chunk = []
+                    current_length = 0
+                j += 1
     return sentences
 
 def build():
