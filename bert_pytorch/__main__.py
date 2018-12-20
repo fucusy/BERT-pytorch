@@ -18,6 +18,7 @@ def train():
     parser.add_argument("-t", "--test_dataset", type=str, default=None, help="test set for evaluate train set")
     parser.add_argument("-v", "--vocab_path", required=True, type=str, help="built vocab model path with bert-vocab")
     parser.add_argument("-o", "--output_path", required=True, type=str, help="ex)output/bert.model")
+    parser.add_argument("-m", "--model_weight", required=False, type=str, help="ex) model weight")
 
     parser.add_argument("-hs", "--hidden", type=int, default=256, help="hidden size of transformer model")
     parser.add_argument("-l", "--layers", type=int, default=8, help="number of layers")
@@ -41,6 +42,13 @@ def train():
 
     args = parser.parse_args()
     mlflow.set_experiment("bert pytorch movielens")
+    log_param("lr", args.lr)
+    log_param("hidden", args.hidden)
+    log_param("layers", args.layers)
+    log_param("attn_heads", args.attn_heads)
+    log_param("seq_len", args.seq_len)
+    log_param("batch_size", args.batch_size)
+    log_param("epochs", args.epochs)
 
     print("Loading Vocab", args.vocab_path)
     vocab = WordVocab.load_vocab(args.vocab_path)
@@ -69,7 +77,6 @@ def train():
 
     print("Training Start")
     print("lr", args.lr)
-    log_param("lr", args.lr)
     for epoch in range(args.epochs):
         trainer.train(epoch)
         trainer.save(epoch, args.output_path)
