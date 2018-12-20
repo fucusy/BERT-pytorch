@@ -51,9 +51,11 @@ class BERTDataset(Dataset):
 
         padding = [self.vocab.pad_index for _ in range(self.seq_len - len(bert_input))]
         bert_input.extend(padding), bert_label.extend(padding), segment_label.extend(padding)
+        bert_position = [i for i in range(len(bert_input))]
 
         output = {"bert_input": bert_input,
                   "bert_label": bert_label,
+                  "bert_position": bert_position,
                   "segment_label": segment_label,
                   "is_next": is_next_label}
 

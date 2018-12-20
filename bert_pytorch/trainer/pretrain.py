@@ -106,7 +106,7 @@ class BERTTrainer:
             data = {key: value.to(self.device) for key, value in data.items()}
 
             # 1. forward the next_sentence_prediction and masked_lm model
-            next_sent_output, mask_lm_output = self.model.forward(data["bert_input"], data["segment_label"])
+            next_sent_output, mask_lm_output = self.model.forward(data["bert_input"], data["segment_label"], data['bert_position'])
 
             # 2-1. NLL(negative log likelihood) loss of is_next classification result
             next_loss = self.next_criterion(next_sent_output, data["is_next"])

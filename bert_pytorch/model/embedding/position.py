@@ -2,6 +2,9 @@ import torch.nn as nn
 import torch
 import math
 
+class MyPositionalEmbedding(nn.Embedding):
+    def __init__(self, d_model, max_len=512):
+        super().__init__(max_len, d_model)
 
 class PositionalEmbedding(nn.Module):
 
