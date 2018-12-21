@@ -61,7 +61,7 @@ def build():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--input_path", default='./sample_text.txt', type=str)
+    parser.add_argument("-i", "--input_path", default='./sample_text.txt', type=str)
     parser.add_argument("-o", "--output_path", required=True, type=str)
     parser.add_argument("-r", "--random_seed", required=False, default=12345, type=int)
     args = parser.parse_args()

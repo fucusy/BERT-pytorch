@@ -109,7 +109,7 @@ class BERTDataset(Dataset):
                 self.file = open(self.corpus_path, "r", encoding=self.encoding)
                 line = self.file.__next__()
 
-            t1, t2 = line[:-1].split("\t")
+            t1, t2 = line[:-1].split("\\t")
             return t1, t2
 
     def get_random_line(self):
@@ -123,4 +123,4 @@ class BERTDataset(Dataset):
             for _ in range(random.randint(self.corpus_lines if self.corpus_lines < 1000 else 1000)):
                 self.random_file.__next__()
             line = self.random_file.__next__()
-        return line[:-1].split("\t")[1]
+        return line[:-1].split("\\t")[1]
