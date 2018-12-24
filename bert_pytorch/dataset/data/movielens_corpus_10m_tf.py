@@ -61,7 +61,6 @@ def build():
             f.write(w + '\n')
         for line in open(movie_path):
             tid, title, genre = line.split("::")
-            print(tid)
             f.write(tid + '\n')
 
 
